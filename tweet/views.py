@@ -14,7 +14,7 @@ def tweet_list(request):
 def tweet_create(request):
     if(request.method=='POST'):
         form = TweetForm(request.POST,request.FILES)
-        if form.is_valid:
+        if form.is_valid():
             tweet= form.save(commit=False)
             tweet.user = request.user
             tweet.save()  
@@ -31,7 +31,7 @@ def tweet_edit(request, tweet_id):
             tweet= form.save(commit=False)
             tweet_user= request.user
             tweet.save()
-            return redirect('tweet_llist')
+            return redirect('tweet_list')
     else: 
         form= TweetForm(instance=tweet)
     return render(request,'tweet_form.html',{'form':form})

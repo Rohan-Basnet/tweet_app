@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}
+ Tweet app
+
+{% endblock %}
+
+{% block content %}
+ {% comment %}  <p class="text-center mt-5">It is a tweet app.</p> {% endcomment %}
+
+ <a class='btn btn-primary m-4' href="{% url 'tweet_create' %}">Create a tweet</a>
+ <div class='container row gap-3'>
+    
+    {% for tweet in tweets %}
+        <div class="card" style="width: 18rem;">
+        <img src="{{tweet.image.url}}" class="card-img-top" alt="...">
+        <div class="card-body">
+            {% comment %} <h5 class="card-title">{{tweet.user.username}}</h5> {% endcomment %}
+            <p class="card-text">{{tweet.text}}</p>
+            <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-primary ">Edit tweet</a>
+            <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-danger">Delete tweet</a>
+        </div>
+        </div>
+    
+    
+    {% endfor %}
+ </div>
+{% endblock %}  
