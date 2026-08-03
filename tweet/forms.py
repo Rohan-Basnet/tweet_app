@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class TweetForm(forms.ModelForm):
     class Meta:
         model = Tweet
-        fields =["text","image"]
+        fields =['text','image']
         
 class UserRegistrationForm(UserCreationForm):
     email=forms.EmailField()
