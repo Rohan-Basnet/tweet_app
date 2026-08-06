@@ -7,10 +7,25 @@
 
 {% block content %}
  {% comment %}  <p class="text-center mt-5">It is a tweet app.</p> {% endcomment %}
+<form method="GET" class="m-4">
+    <input type="text"
+    name="q"
+    placeholder="Search for tweets"
+    value="{{ query }}"
+    
+    >
+
+    <button class="btn btn-primary" type="submit">Search</button>
+
+
+
+
+
+</form>
 
  <a class='btn btn-primary m-4' href="{% url 'tweet_create' %}">Create a tweet</a>
  <div class='container row gap-3'>
-    
+    {% if tweets %}
     {% for tweet in tweets %}
         <div class="card" style="width: 18rem;">
         {% if tweet.image %}
@@ -26,7 +41,10 @@
         </div>
         </div>
     
-    
     {% endfor %}
+     {% else %}
+ <h1>No tweets found.</h1>
+ {% endif %}
  </div>
+
 {% endblock %}  
