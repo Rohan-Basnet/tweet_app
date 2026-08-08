@@ -8,8 +8,16 @@ class Tweet(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)#creates the timestamp once when the object is created
     updated_at=models.DateTimeField(auto_now=True)# updates the timestamp everytime object is saved
 
-def __str__(self):
-    return f'{self.user.username} - {self.text[:50]}'
+    def __str__(self):
+        return f'{self.user.username} - {self.text[:50]}'
+
+class Profile(models.Model):
+    user= models.OneToOneField(User,on_delete=models.CASCADE)
+    bio=models.TextField(max_length=200, blank=True)
+    profile_picture=models.ImageField(upload_to='profile_pics/',blank=True,null=True)
+
+    def __str__(self):
+        return f'{self.user.username}-{self.bio[:50]}'
 
 
 # Create your models here.

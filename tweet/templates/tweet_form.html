@@ -16,7 +16,50 @@
  </h2>  
     <form method="POST" enctype="multipart/form-data" class="form">
         {% csrf_token %}
-        {{ form.as_p }}
+        {% comment %} //we can use it {% endcomment %}
+        {% comment %} {{ form.as_p }} {% endcomment %}
+
+       {% comment %} // we can use it too {% endcomment %}
+        {% comment %} {{form.text}}
+
+        {{form.image}}
+        {% if form.image.errors %}
+            {% for error in form.image.errors %}
+        <div class="alert alert-danger">
+            {{ error}}
+        </div>
+            {% endfor %}
+        {% endif %} {% endcomment %}
+        <div class="mb-3">
+        <label for="{{ form.text.id_for_label }}" class="form-label">
+            Tweet
+        </label>
+        {{ form.text }}
+
+        {% if form.text.errors %}
+            {% for error in form.text.errors %}
+                <div class="text-danger mt-2">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+        
+        <div class="mb-3">
+        <label for="{{ form.image.id_for_label }}" class="form-label">
+            Image
+        </label>
+
+        {{ form.image }}
+
+        {% if form.image.errors %}
+            {% for error in form.image.errors %}
+                <div class="text-danger mt-2">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
         <button class="btn btn-primary" type="submit">Submit</button>
     </form>
     <a class="btn btn-success mt-4" href="{% url 'tweet_list' %}">Back to tweet list</a>
