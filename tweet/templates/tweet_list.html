@@ -16,11 +16,6 @@
     >
 
     <button class="btn btn-primary" type="submit">Search</button>
-
-
-
-
-
 </form>
 
  <a class='btn btn-primary m-4' href="{% url 'tweet_create' %}">Create a tweet</a>
@@ -32,8 +27,13 @@
         <img src="{{tweet.image.url}}" class="card-img-top" alt="...">
         {% endif %}
         <div class="card-body">
-            <h5 class="card-title">{{tweet.user.username}}</h5>
-            <p class="card-text">{{tweet.text}}</p>
+            {% comment %} <h5 class="card-title">{{tweet.user.username}}</h5> {% endcomment %}
+            {% comment %} <button>@{{tweet.user.username}}</button> {% endcomment %}
+            
+            <a href="{% url 'profile_view' tweet.user.username %}">@{{tweet.user.username}}</a>
+
+
+            <p class="card-text"></p>
             {% if tweet.user == user %}
             <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-primary ">Edit tweet</a>
             <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-danger">Delete tweet</a>

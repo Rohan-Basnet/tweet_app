@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from .models import Tweet
+from .models import Tweet, Profile
+from django.contrib.auth.models import User
 from .forms import TweetForm, UserRegistrationForm
 from django.shortcuts import get_object_or_404,redirect
 from django.contrib.auth.decorators import login_required
@@ -11,7 +12,7 @@ def index_view(request):
 def tweet_list(request):
     tweets= Tweet.objects.all().order_by('-created_at')
 
-    query= request.GET.get('q')
+    query= request.GET.get('q', "")
     if query:
         tweets= tweets.filter(user__username__icontains=query)
     return render(request,'tweet_list.html',{'tweets':tweets, 'query':query})
@@ -67,3 +68,9 @@ def register(request):
         form= UserRegistrationForm()
 
     return render(request,'registration/register.html',{'form':form})
+
+def profile_view(request, username):
+    user=get_object_or_404( User, username=username)
+    profile=get_object_or_404(Profile,user=user)
+    tweet_count=Tweet.objects.filter(user=user).count()
+    return render(request,'profile_view.html',{'user':user, 'profile':profile,'bio':profile.bio,'tweet_count':tweet_count})

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}
+
+Profile details
+
+{% endblock title %}
+
+
+{% block content %}
+<div style='display:flex; flex-direction:column; align-items:center; justify-content:center; margin-top:50px;'>
+
+<div class="card" style="width: 18rem;">
+  <img src="{{profile.profile_picture.url}}" class="card-img-top" alt="...">
+  <div class="card-body">
+    {% comment %} <h5 class="card-title"></h5> {% endcomment %}
+    <p class="card-text">{{profile.bio}}</p>
+    <p class="card-text">Total tweets: {{tweet_count}}</p>
+    <a href="{% url 'tweet_list' %}" class="btn btn-primary">Back to tweets</a>
+  </div>
+</div>
+</div>
+{% endblock  %}
+
+
