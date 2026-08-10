@@ -37,8 +37,14 @@
             {% if tweet.user == user %}
             <a href="{% url 'tweet_edit' tweet.id %}" class="btn btn-primary ">Edit tweet</a>
             <a href="{% url 'tweet_delete' tweet.id %}" class="btn btn-danger">Delete tweet</a>
+            
             {% endif %}
+            
         </div>
+         <form action="{% url 'comments_view' tweet.id %}">
+            {% csrf_token %}
+            <button type="submit">💬</button>
+         </form>
         </div>
     
     {% endfor %}

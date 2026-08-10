@@ -74,3 +74,9 @@ def profile_view(request, username):
     profile=get_object_or_404(Profile,user=user)
     tweet_count=Tweet.objects.filter(user=user).count()
     return render(request,'profile_view.html',{'user':user, 'profile':profile,'bio':profile.bio,'tweet_count':tweet_count})
+
+def comments_view(request, tweet_id):
+    tweet= get_object_or_404(Tweet, pk=tweet_id)
+    comments= tweet.comments.all()
+
+    return render(request, 'comments.html', {'tweet': tweet, 'comments': comments})

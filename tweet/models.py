@@ -7,7 +7,7 @@ class Tweet(models.Model):
     image=models.ImageField(upload_to='photos/',blank=True,null=True)
     created_at=models.DateTimeField(auto_now_add=True)#creates the timestamp once when the object is created
     updated_at=models.DateTimeField(auto_now=True)# updates the timestamp everytime object is saved
-
+    # comments=models.TextField(max_length=200,blank=True,null=True)
     def __str__(self):
         return f'{self.user.username} - {self.text[:50]}'
 
