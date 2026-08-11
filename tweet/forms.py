@@ -1,5 +1,5 @@
 from django import forms 
-from .models import Tweet
+from .models import Tweet, Comments
 from django.contrib.auth.forms import UserCreationForm,ValidationError
 from django.contrib.auth.models import User
 class TweetForm(forms.ModelForm):
@@ -24,6 +24,11 @@ class TweetForm(forms.ModelForm):
                 raise forms.ValidationError('Image size must be less than 1MB')
 
             return image
+
+class CommentsForm(forms.ModelForm):
+    class Meta:
+        model=Comments
+        fields=['text']
         
 class UserRegistrationForm(UserCreationForm):
     email=forms.EmailField()
