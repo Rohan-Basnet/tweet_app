@@ -11,4 +11,5 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('profile/<str:username>/', views.profile_view, name='profile_view'),
     path('<int:tweet_id>/comments/', views.comments_view, name='comments_view'),
+    path('<int:tweet_id>/make_comment/', views.make_comment, name='make_comment')
 ] 

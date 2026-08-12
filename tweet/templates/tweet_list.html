@@ -51,6 +51,15 @@
      {% else %}
  <h1>No tweets found.</h1>
  {% endif %}
- </div>
+ {% comment %} </div>
+ <div>
+    {% if comments %}
+        <p>{{comments.text}}</p>
+
+    {% else %}
+    
+        <p>No comments found.</p>
+    {% endif %}
+ </div> {% endcomment %}
 
 {% endblock %}  

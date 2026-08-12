@@ -8,7 +8,8 @@ comments here
 
 
 {% block content %}
-<form method="post" enctype="multipart/form-data" name="comment_form">
+<form method="post" enctype="multipart/form-data" name="comment_form"
+ action="{% url 'make_comment' tweet.id %}">
     {% csrf_token %}
     <label for="">Comment:</label>{{form.as_p}}
     <button class="btn btn-primary" type="submit">Add Comment</button>

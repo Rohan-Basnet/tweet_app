@@ -86,6 +86,8 @@ def comments_view(request, tweet_id):
 def make_comment(request, tweet_id):
     tweet= get_object_or_404(Tweet, pk=tweet_id)
     if request.method == 'POST':
+        print("post request received")
+        print("post data:", request.POST)
         form= CommentsForm(request.POST)
         if form.is_valid():
             comment= form.save(commit=False)
