@@ -41,25 +41,23 @@
             {% endif %}
             
         </div>
+        <div class="d-flex gap-2 align-tems-ccenter">
          <form action="{% url 'comments_view' tweet.id %}">
             {% csrf_token %}
-            <button type="submit">💬</button>
+            <button class="btn btn-outline-primary" type="submit">💬</button>
          </form>
+         <form action="">
+            {% csrf_token %}
+            <button class="btn btn-outline-danger" type="submit">❤️</button>
+         </form>
+        </div>
         </div>
     
     {% endfor %}
      {% else %}
  <h1>No tweets found.</h1>
  {% endif %}
- {% comment %} </div>
- <div>
-    {% if comments %}
-        <p>{{comments.text}}</p>
+ </div>
 
-    {% else %}
-    
-        <p>No comments found.</p>
-    {% endif %}
- </div> {% endcomment %}
 
 {% endblock %}  

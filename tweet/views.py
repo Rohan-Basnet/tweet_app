@@ -85,6 +85,7 @@ def comments_view(request, tweet_id):
 
 def make_comment(request, tweet_id):
     tweet= get_object_or_404(Tweet, pk=tweet_id)
+    comments = tweet.comments.all()
     if request.method == 'POST':
         print("post request received")
         print("post data:", request.POST)
@@ -98,7 +99,7 @@ def make_comment(request, tweet_id):
     else:
         form= CommentsForm()
 
-    return render(request, 'comments.html', {'form': form, 'tweet': tweet})
+    return render(request, 'comments.html', {'form': form, 'tweet': tweet, 'comments': comments})
 
 
 
