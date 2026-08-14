@@ -27,4 +27,13 @@ class Comments(models.Model):
 
     def __str__(self):
         return f'{self.user.username}-{self.text[:50]}'
+
+
+class Like(models.Model):
+    user= models.ForeignKey(User , on_delete= models.CASCADE, related_name='likes')
+    tweet= models.ForeignKey(Tweet, on_delete=models.CASCADE, related_name='likes')
+    liked_at= models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.user.username} liked {self.tweet.text[:50]}'
 # Create your models here.
