@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from .models import Tweet, Profile, Comments
+
+from .models import Tweet, Profile, Comments, Like
 from django.contrib.auth.models import User
 from .forms import TweetForm, UserRegistrationForm, CommentsForm
 from django.shortcuts import get_object_or_404,redirect
@@ -101,5 +102,19 @@ def make_comment(request, tweet_id):
 
     return render(request, 'comments.html', {'form': form, 'tweet': tweet, 'comments': comments})
 
+def like_view(request, tweet_id):
+    tweet= get_object_or_404(Tweet, pk=tweet_id)
+    if request.method=='POST':
+        if tweet.likes.filter(user=request.user).exists():
+            tweet.likes.filter(user=request.user).delete()
+            
+        else:
+            tweet_count=tweet.likes.count()
+            tweet.likes.create(user=request.user)
+            tweet_count=tweet.likes.count()
+            
+        return redirect('tweet_list')
 
+   
+    
 
