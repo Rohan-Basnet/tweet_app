@@ -16,6 +16,12 @@ def tweet_list(request):
     query= request.GET.get('q', "")
     if query:
         tweets= tweets.filter(user__username__icontains=query)
+    for tweet in tweets:
+            if request.user.is_authenticated:
+                if tweet.likes.filter(user=request.user).exists():
+                    tweet.is_liked=True
+                else:
+                    tweet.is_liked=False
     return render(request,'tweet_list.html',{'tweets':tweets, 'query':query})
 
 @login_required
@@ -38,7 +44,7 @@ def tweet_edit(request, tweet_id):
         form= TweetForm(request.POST, request.FILES,instance=tweet)
         if form.is_valid:
             tweet= form.save(commit=False)
-            tweet_user= request.user
+            tweet.user= request.user
             tweet.save()
             return redirect('tweet_list')
     else: 
@@ -88,8 +94,6 @@ def make_comment(request, tweet_id):
     tweet= get_object_or_404(Tweet, pk=tweet_id)
     comments = tweet.comments.all()
     if request.method == 'POST':
-        print("post request received")
-        print("post data:", request.POST)
         form= CommentsForm(request.POST)
         if form.is_valid():
             comment= form.save(commit=False)
@@ -103,18 +107,22 @@ def make_comment(request, tweet_id):
     return render(request, 'comments.html', {'form': form, 'tweet': tweet, 'comments': comments})
 
 def like_view(request, tweet_id):
-    tweet= get_object_or_404(Tweet, pk=tweet_id)
+    '''
+    This view handles the like fucntionality for a specific tweet.
+    If user has already liked the tweet, it removes the like.If not,it adds a like to that tweet.
+    '''
+    tweets= get_object_or_404(Tweet, pk=tweet_id)
     if request.method=='POST':
-        if tweet.likes.filter(user=request.user).exists():
-            tweet.likes.filter(user=request.user).delete()
-            
+        if tweets.likes.filter(user=request.user).exists():
+            tweets.likes.filter(user=request.user).delete()
+
         else:
-            tweet_count=tweet.likes.count()
-            tweet.likes.create(user=request.user)
-            tweet_count=tweet.likes.count()
             
+            tweets.likes.create(user=request.user)
+       
         return redirect('tweet_list')
 
+    
    
     
 

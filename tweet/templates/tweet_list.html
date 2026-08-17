@@ -48,7 +48,13 @@
          </form>
           <form action="{% url 'like_view' tweet.id %}" method="POST">
             {% csrf_token %} 
-        <button class="btn btn-outline-danger"  type="submit">❤️</button>
+        <button 
+         {%if tweet.is_liked %}
+            class="btn btn-danger"
+         {% else %}
+            class="btn btn-outline-danger"
+        {% endif %}
+        type="submit">❤️</button>
          </form>
         </div>
         </div>
