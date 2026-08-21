@@ -46,6 +46,7 @@
             {% csrf_token %}
             <button class="btn btn-outline-primary" type="submit">💬</button>
          </form>
+         {{tweet.comments.count}}
           <form action="{% url 'like_view' tweet.id %}" method="POST">
             {% csrf_token %} 
         <button 
@@ -56,6 +57,8 @@
         {% endif %}
         type="submit">❤️</button>
          </form>
+            {{tweet.likes.count}}
+         
         </div>
         </div>
     
