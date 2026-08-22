@@ -28,7 +28,7 @@ comments here
  action="{% url 'make_comment' tweet.id %}">
     {% csrf_token %}
     <label class="form-label mt-3 mb-3 text text-primary" for="">Make Comment:</label>{{form.as_p}}
-    <button class="btn btn-primary" type="submit">Add Comment</button>
+    <button class="btn btn-primary" type="submit">Post</button>
     
 </form>
 
