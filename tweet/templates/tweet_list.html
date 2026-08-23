@@ -62,10 +62,15 @@
          </form>
             {{tweet.likes.count}}
         
-            <form action="">
-                {% csrf_token %}
-                <button class="btn btn-primary" type="submit">↗</button>
-            </form>
+                <button class="btn btn-primary" onclick="copyTweetLink('{% url 'tweet_detail' tweet.id  %}')">↗</button>
+                <script>
+                     function copyTweetLink(url){
+                        const fullURL= window.location.origin + url;
+                        navigator.clipboard.writeText(fullURL)
+                        alert("Tweet link copied!")
+
+                    }
+                </script>
          
         </div>
         </div>

@@ -122,7 +122,9 @@ def like_view(request, tweet_id):
        
         return redirect('tweet_list')
 
-    
+def tweet_detail(request,pk):
+    tweet= get_object_or_404(Tweet,pk=pk)
+    return render(request, 'tweet_detail.html', {'tweet':tweet})
    
     
 
