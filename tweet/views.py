@@ -22,6 +22,11 @@ def tweet_list(request):
                     tweet.is_liked=True
                 else:
                     tweet.is_liked=False
+            if request.user.is_authenticated:
+                if tweet.follow.filter(user=request.user).exists():
+                    tweet.is_followed=True
+                else:
+                    tweet.is_followed=False
     return render(request,'tweet_list.html',{'tweets':tweets, 'query':query})
 
 @login_required
@@ -125,6 +130,17 @@ def like_view(request, tweet_id):
 def tweet_detail(request,pk):
     tweet= get_object_or_404(Tweet,pk=pk)
     return render(request, 'tweet_detail.html', {'tweet':tweet})
+
+def follow_user(request,tweet_id):
+    tweets= get_object_or_404(Tweet, pk=tweet_id)
+    if request.method=='POST':
+        if tweets.follow.filter(user=request.user).exists():
+            tweets.follow.filter(user=request.user).delete()
+
+        else:
+            tweets.follow.create(user=request.user)
+    return redirect('tweet_list')
+
    
     
 

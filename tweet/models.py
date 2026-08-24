@@ -26,7 +26,7 @@ class Comments(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.user.username}-{self.text[:50]}'
+        return f'{self.user.username} commented {self.text[:50]}'
 
 
 class Like(models.Model):
@@ -36,4 +36,11 @@ class Like(models.Model):
 
     def __str__(self):
         return f'{self.user.username} liked {self.tweet.text[:50]}'
-# Create your models here.
+
+class Follow(models.Model):
+    user= models.ForeignKey(User, on_delete=models.CASCADE, related_name='follow')
+    tweet=models.ForeignKey(Tweet, on_delete=models.CASCADE, related_name='follow')
+    followed_at=models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.user.username} followed {self.tweet}' 
