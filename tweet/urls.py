@@ -14,5 +14,5 @@ urlpatterns = [
     path('<int:tweet_id>/make_comment/', views.make_comment, name='make_comment'),
     path('<int:tweet_id>/like/', views.like_view, name='like_view'),
     path('tweet/<int:pk>/', views.tweet_detail, name='tweet_detail'),
-    path('<int:tweet_id>/follow', views.follow_user, name='follow_user')
+    path('<int:user_id>/follow', views.follow_user, name='follow_user')
 ] 

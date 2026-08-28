@@ -23,30 +23,19 @@
     {% if tweets %}
     {% for tweet in tweets %}
 
-        <div class="card" style="width: 24rem; height:auto;">
+        <div class="card" style="width: 24rem;">
+            <a class='m-3' href="{% url 'profile_view' tweet.user.username %}">👤{{tweet.user.username}}</a>
             {% comment %} follow functionality {% endcomment %}
-            <div class="d-flex gap-2 justify-content-end">
-                <a class='m-3' href="{% url 'profile_view' tweet.user.username %}">👤{{tweet.user.username}}</a>
-                <form action="{% url 'follow_user' tweet.id %}" method="POST">
-                    {% csrf_token %}
-                    <button {% if tweet.is_followed %}
-                    class='btn btn-primary mt-2 ml-auto' type='submit'
-                    {% else %}
-                    class='btn btn-outline-primary mt-2' type='submit'
-                    {% endif %}
-                    >follow</button>
-                    {% comment %} <button class='btn btn-primary mt-2' type="submit">unfollow</button> {% endcomment %}
-            </form>
-            </div>
-
+            
+         
             {% if tweet.image %}
             
             <p>{{tweet.text}}</p>
             <img src="{{tweet.image.url}}" class="card-img-top" alt="...">
             {% endif %}
             <div class="card-body">
-                {% comment %} <h5 class="card-title">{{tweet.user.username}}</h5> {% endcomment %}
-                {% comment %} <button>@{{tweet.user.username}}</button> {% endcomment %}
+                {% comment %} <h5 class="card-title">{{tweet.user.username}}</h5>
+                <button>@{{tweet.user.username}}</button> {% endcomment %}
                 
                 
 

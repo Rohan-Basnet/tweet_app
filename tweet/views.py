@@ -22,11 +22,11 @@ def tweet_list(request):
                     tweet.is_liked=True
                 else:
                     tweet.is_liked=False
-            if request.user.is_authenticated:
-                if tweet.follow.filter(user=request.user).exists():
-                    tweet.is_followed=True
-                else:
-                    tweet.is_followed=False
+            # if request.user.is_authenticated:
+            #     if tweet.follow.filter(user=request.user).exists():
+            #         tweet.is_followed=True
+            #     else:   
+            #         tweet.is_followed=False
     return render(request,'tweet_list.html',{'tweets':tweets, 'query':query})
 
 @login_required
@@ -85,6 +85,12 @@ def profile_view(request, username):
     user=get_object_or_404( User, username=username)
     profile=get_object_or_404(Profile,user=user)
     tweet_count=Tweet.objects.filter(user=user).count()
+    if request.user.is_authenticated:
+        if user.follow.filter(user=request.user).exists():
+            user.is_followed=True
+        else:
+            user.is_followed=False
+
     return render(request,'profile_view.html',{'user':user, 'profile':profile,'bio':profile.bio,'tweet_count':tweet_count})
 
 def comments_view(request, tweet_id):
@@ -131,14 +137,14 @@ def tweet_detail(request,pk):
     tweet= get_object_or_404(Tweet,pk=pk)
     return render(request, 'tweet_detail.html', {'tweet':tweet})
 
-def follow_user(request,tweet_id):
-    tweets= get_object_or_404(Tweet, pk=tweet_id)
+def follow_user(request,user_id):
+    user= get_object_or_404(User, pk=user_id)
     if request.method=='POST':
-        if tweets.follow.filter(user=request.user).exists():
-            tweets.follow.filter(user=request.user).delete()
+        if user.follow.filter(user=request.user).exists():
+            user.follow.filter(user=request.user).delete()
 
         else:
-            tweets.follow.create(user=request.user)
+            user.follow.create(user=request.user)
     return redirect('tweet_list')
 
    
