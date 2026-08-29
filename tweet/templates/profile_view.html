@@ -11,29 +11,32 @@ Profile details
 <div style='display:flex; flex-direction:column; align-items:center; justify-content:center; margin-top:50px;'>
 
 <div class="card" style="width: 18rem;">
-<div class="d-flex gap-3 justify-content-end">
+  <div class="d-flex justify-content-end">
                 
-                <form action="{% url 'follow_user' user.id %}" method="POST">
-                    {% csrf_token %}
-                    <button {% if user.is_followed %}
-                    class='btn btn-primary mt-2 ml-auto' type='submit'
-                    {% else %}
-                    class='btn btn-outline-primary mt-2' type='submit'
-                    {% endif %}
-                    >follow</button>
-                <button class='btn btn-primary mt-2' type="submit">unfollow</button> 
-            </form>
-            <p class="mt-3">{{tweet.follow.count}}</p>
-            </div> 
-  <img src="{{profile.profile_picture.url}}" class="card-img-top" alt="...">
-  <div class="card-body">
-    {% comment %} <h5 class="card-title"></h5> {% endcomment %}
-    <p class="card-text">{{profile.bio}}</p>
-    {{user.username}}
-    <p class="card-text">Total tweets: {{tweet_count}}</p>
-    <a href="{% url 'tweet_list' %}" class="btn btn-primary">Back to tweets</a>
+     <form action="{% url 'follow_user' user.id %}" method="POST">
+          {% csrf_token %}
+          <button {% if user.is_followed %}
+          class='btn btn-primary mt-2 ml-auto' type='submit'
+          {% else %}
+          class='btn btn-outline-primary mt-2' type='submit'
+          {% endif %}>
+          follow
+        </button>
+      </form>
+      <p class="mt-3">{{tweet.follow.count}}</p>
+      </div> 
+    <img src="{{profile.profile_picture.url}}" class="card-img-top mt-2" alt="...">
+    <div class="card-body">
+      {% comment %} <h5 class="card-title"></h5> {% endcomment %}
+      
+      <strong>{{user.username}}</strong>
+      
+      <p class="card-text">{{profile.bio}}</p>
+    
+      <p class="card-text">Total tweets: {{tweet_count}}</p>
+      <a href="{% url 'tweet_list' %}" class="btn btn-primary">Back to tweets</a>
+    </div>
   </div>
-</div>
 </div>
 {% endblock  %}
 

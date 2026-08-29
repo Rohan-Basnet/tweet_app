@@ -145,7 +145,7 @@ def follow_user(request,user_id):
 
         else:
             user.follow.create(user=request.user)
-    return redirect('tweet_list')
+    return redirect('profile_view', username=request.user.username)
 
    
     
