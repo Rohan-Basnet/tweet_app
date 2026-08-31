@@ -38,8 +38,19 @@ class Like(models.Model):
         return f'{self.user.username} liked {self.tweet.text[:50]}'
 
 class Follow(models.Model):
-    user= models.ForeignKey(User, on_delete=models.CASCADE, related_name='follow')
-    followed_at=models.DateTimeField(auto_now_add=True)
+    follower = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='following'
+    )
+
+    following = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='followers'
+    )
+
+    followed_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f'{self.user.username} follows you' 

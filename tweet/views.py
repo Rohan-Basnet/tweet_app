@@ -6,7 +6,7 @@ from .forms import TweetForm, UserRegistrationForm, CommentsForm
 from django.shortcuts import get_object_or_404,redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
-# Create your views here.
+
 def index_view(request):
     return render(request, 'index.html')
 
@@ -22,11 +22,7 @@ def tweet_list(request):
                     tweet.is_liked=True
                 else:
                     tweet.is_liked=False
-            # if request.user.is_authenticated:
-            #     if tweet.follow.filter(user=request.user).exists():
-            #         tweet.is_followed=True
-            #     else:   
-            #         tweet.is_followed=False
+          
     return render(request,'tweet_list.html',{'tweets':tweets, 'query':query})
 
 @login_required
@@ -82,16 +78,16 @@ def register(request):
     return render(request,'registration/register.html',{'form':form})
 
 def profile_view(request, username):
-    user=get_object_or_404( User, username=username)
-    profile=get_object_or_404(Profile,user=user)
-    tweet_count=Tweet.objects.filter(user=user).count()
+    target_user=get_object_or_404( User, username=username)
+    profile=get_object_or_404(Profile,user=target_user)
+    tweet_count=Tweet.objects.filter(user=target_user).count()
     if request.user.is_authenticated:
-        if user.follow.filter(user=request.user).exists():
-            user.is_followed=True
+        if target_user.followers.filter(follower=request.user).exists():
+            target_user.is_followed=True
         else:
-            user.is_followed=False
+            target_user.is_followed=False
 
-    return render(request,'profile_view.html',{'user':user, 'profile':profile,'bio':profile.bio,'tweet_count':tweet_count})
+    return render(request,'profile_view.html',{'user':request.user,'target_user':target_user, 'profile':profile,'bio':profile.bio,'tweet_count':tweet_count})
 
 def comments_view(request, tweet_id):
     tweet= get_object_or_404(Tweet, pk=tweet_id)
@@ -126,7 +122,7 @@ def like_view(request, tweet_id):
     if request.method=='POST':
         if tweets.likes.filter(user=request.user).exists():
             tweets.likes.filter(user=request.user).delete()
-
+        
         else:
             
             tweets.likes.create(user=request.user)
@@ -138,14 +134,15 @@ def tweet_detail(request,pk):
     return render(request, 'tweet_detail.html', {'tweet':tweet})
 
 def follow_user(request,user_id):
-    user= get_object_or_404(User, pk=user_id)
+    target_user= get_object_or_404(User, pk=user_id)
     if request.method=='POST':
-        if user.follow.filter(user=request.user).exists():
-            user.follow.filter(user=request.user).delete()
-
+        if target_user.followers.filter(follower=request.user).exists():
+            target_user.followers.filter(follower=request.user).delete()
+            print('User exists')
         else:
-            user.follow.create(user=request.user)
-    return redirect('profile_view', username=request.user.username)
+            target_user.followers.create(follower=request.user)
+            print('New user')
+    return redirect('profile_view', username=target_user.username)
 
    
     
