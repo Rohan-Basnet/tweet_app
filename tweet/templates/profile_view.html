@@ -20,7 +20,11 @@ Profile details
           {% else %}
           class='btn btn-outline-primary m-2' type='submit'
           {% endif %}>
-          follow
+            {% if target_user.is_followed %}
+              following
+            {% else %}
+              follow
+            {% endif %}
         </button>
 
         {{target_user.followers.count}}
